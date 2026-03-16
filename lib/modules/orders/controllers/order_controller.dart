@@ -1,0 +1,53 @@
+import 'package:get/get.dart';
+import '../../../core/models/order_model.dart';
+import '../../../core/models/pagination_meta.dart';
+import '../repositories/order_repository.dart';
+
+class OrderController extends GetxController {
+  final OrderRepository repository = Get.put(OrderRepository());
+
+  final orders = <OrderModel>[].obs;
+  final isLoading = false.obs;
+  final meta = Rxn<PaginationMeta>();
+  final searchQuery = "".obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchOrders();
+  }
+
+  Future<void> fetchOrders({int page = 1}) async {
+    try {
+      isLoading.value = true;
+      final response = await repository.getOrders(
+        page: page,
+        search: searchQuery.value.isNotEmpty ? searchQuery.value : null,
+      );
+      
+      if (response.statusCode == 200) {
+        orders.assignAll(response.data ?? []);
+        meta.value = response.meta;
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void onSearch(String value) {
+    searchQuery.value = value;
+    fetchOrders();
+  }
+
+  void onPageChanged(int page) {
+    fetchOrders(page: page);
+  }
+
+  void createOrder() {
+    Get.snackbar("Info", "Create Order functionality would go here");
+  }
+
+  void openFilter() {
+    Get.snackbar("Info", "Filter functionality would go here");
+  }
+}
