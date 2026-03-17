@@ -21,6 +21,8 @@ import '../modules/pos/views/pos_view.dart';
 
 import '../modules/kitchen/bindings/kitchen_binding.dart';
 import '../modules/kitchen/views/kitchen_view.dart';
+import '../modules/table_manage/bindings/table_binding.dart';
+import '../modules/table_manage/views/table_view.dart';
 
 part 'app_routes.dart';
 
@@ -79,6 +81,11 @@ class AppPages {
       name: _Paths.KITCHEN,
       page: () => const KitchenView(),
       binding: KitchenBinding(),
+    ),
+    GetPage(
+      name: _Paths.TABLES,
+      page: () => const TableView(),
+      binding: TableBinding(),
     ),
   ];
 }

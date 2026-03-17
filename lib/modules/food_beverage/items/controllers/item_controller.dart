@@ -103,6 +103,7 @@ class ItemController extends GetxController {
                 ),
                 const SizedBox(height: 16),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: UiTextInput(
@@ -114,25 +115,32 @@ class ItemController extends GetxController {
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: Obx(() => UiDropdown<CategoryModel>(
-                            label: "Category",
-                            hint: "Select category",
+                      child: Obx(() {
+                        final items = categoryController.categories
+                            .map((cat) => DropdownMenuItem(
+                                  value: cat,
+                                  child: Text(cat.name, overflow: TextOverflow.ellipsis),
+                                ))
+                            .toList();
+
+                        // Ensure current value is in the items list to avoid crash
+                        if (selectedCategory.value != null && !categoryController.categories.any((c) => c.id == selectedCategory.value!.id)) {
+                          items.add(DropdownMenuItem(
                             value: selectedCategory.value,
-                            items: categoryController.categories
-                                .map((cat) => DropdownMenuItem(
-                                      value: cat,
-                                      child: Text(cat.name),
-                                    ))
-                                .toList(),
-                            onChanged: (val) => selectedCategory.value = val,
-                          )),
+                            child: Text(selectedCategory.value!.name, overflow: TextOverflow.ellipsis),
+                          ));
+                        }
+
+                        return UiDropdown<CategoryModel>(
+                          label: "Category",
+                          hint: "Select category",
+                          value: selectedCategory.value,
+                          items: items,
+                          onChanged: (val) => selectedCategory.value = val,
+                        );
+                      }),
                     ),
                   ],
-                ),
-                const SizedBox(height: 16),
-                UiImagePicker(
-                  label: "Item Photo",
-                  onImageSelected: (file) => selectedImage.value = file,
                 ),
                 const SizedBox(height: 32),
                 Row(
@@ -145,7 +153,7 @@ class ItemController extends GetxController {
                     const SizedBox(width: 12),
                     UiButton(
                       label: "Save Item",
-                      width: 120,
+                      width: 130,
                       onPressed: submitItem,
                     ),
                   ],
@@ -207,7 +215,10 @@ class ItemController extends GetxController {
     nameController.text = item.name;
     descriptionController.text = item.description ?? '';
     priceController.text = item.price.toString();
-    selectedCategory.value = item.category;
+    
+    // Select from list if exists, otherwise use current
+    final foundCategory = categoryController.categories.firstWhereOrNull((c) => c.id == item.category?.id);
+    selectedCategory.value = foundCategory ?? item.category;
     selectedImage.value = null; // Reset image, could load existing if needed
 
     Get.dialog(
@@ -245,6 +256,7 @@ class ItemController extends GetxController {
                 ),
                 const SizedBox(height: 16),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: UiTextInput(
@@ -256,25 +268,32 @@ class ItemController extends GetxController {
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: Obx(() => UiDropdown<CategoryModel>(
-                            label: "Category",
-                            hint: "Select category",
+                      child: Obx(() {
+                        final items = categoryController.categories
+                            .map((cat) => DropdownMenuItem(
+                                  value: cat,
+                                  child: Text(cat.name, overflow: TextOverflow.ellipsis),
+                                ))
+                            .toList();
+
+                        // Ensure current value is in the items list to avoid crash
+                        if (selectedCategory.value != null && !categoryController.categories.any((c) => c.id == selectedCategory.value!.id)) {
+                          items.add(DropdownMenuItem(
                             value: selectedCategory.value,
-                            items: categoryController.categories
-                                .map((cat) => DropdownMenuItem(
-                                      value: cat,
-                                      child: Text(cat.name),
-                                    ))
-                                .toList(),
-                            onChanged: (val) => selectedCategory.value = val,
-                          )),
+                            child: Text(selectedCategory.value!.name, overflow: TextOverflow.ellipsis),
+                          ));
+                        }
+
+                        return UiDropdown<CategoryModel>(
+                          label: "Category",
+                          hint: "Select category",
+                          value: selectedCategory.value,
+                          items: items,
+                          onChanged: (val) => selectedCategory.value = val,
+                        );
+                      }),
                     ),
                   ],
-                ),
-                const SizedBox(height: 16),
-                UiImagePicker(
-                  label: "Item Photo (optional)",
-                  onImageSelected: (file) => selectedImage.value = file,
                 ),
                 const SizedBox(height: 32),
                 Row(
@@ -286,7 +305,7 @@ class ItemController extends GetxController {
                     ),
                     const SizedBox(width: 12),
                     UiButton(
-                      label: "Update Item",
+                      label: "Update",
                       width: 120,
                       onPressed: () => updateItem(item.id),
                     ),

@@ -13,6 +13,7 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const POS = _Paths.POS;
   static const KITCHEN = _Paths.KITCHEN;
+  static const TABLES = _Paths.TABLES;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const SPLASH = '/splash';
   static const POS = '/pos';
   static const KITCHEN = '/kitchen';
+  static const TABLES = '/tables';
 }

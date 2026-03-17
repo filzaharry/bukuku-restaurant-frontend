@@ -10,6 +10,8 @@ class UiTextInput extends StatelessWidget {
   final IconData? prefixIcon;
   final Widget? suffixIcon;
 
+  final ValueChanged<String>? onChanged;
+
   const UiTextInput({
     Key? key,
     required this.label,
@@ -19,6 +21,7 @@ class UiTextInput extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.prefixIcon,
     this.suffixIcon,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -39,6 +42,7 @@ class UiTextInput extends StatelessWidget {
           controller: controller,
           obscureText: obscureText,
           keyboardType: keyboardType,
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: const TextStyle(color: AppColors.textSecondary),

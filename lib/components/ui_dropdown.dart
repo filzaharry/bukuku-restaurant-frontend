@@ -34,6 +34,7 @@ class UiDropdown<T> extends StatelessWidget {
         DropdownButtonFormField<T>(
           value: value,
           items: items,
+          isExpanded: true,
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,

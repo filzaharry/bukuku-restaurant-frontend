@@ -1,21 +1,21 @@
-class CategoryModel {
+class TableModel {
   final int id;
+  final String uniqueId;
   final String name;
-  final String? image;
   final int status;
 
-  CategoryModel({
+  TableModel({
     required this.id,
+    required this.uniqueId,
     required this.name,
-    this.image,
     required this.status,
   });
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    return CategoryModel(
+  factory TableModel.fromJson(Map<String, dynamic> json) {
+    return TableModel(
       id: json['id'] ?? 0,
+      uniqueId: json['unique_id'] ?? "",
       name: json['name'] ?? "",
-      image: json['image'],
       status: json['status'] ?? 0,
     );
   }
@@ -23,7 +23,7 @@ class CategoryModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is CategoryModel && other.id == id;
+    return other is TableModel && other.id == id;
   }
 
   @override

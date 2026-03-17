@@ -29,7 +29,7 @@ class UiButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           foregroundColor: textColor,
-          minimumSize: Size(width ?? double.infinity, 50),
+          minimumSize: Size(width ?? 0, 50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
