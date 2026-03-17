@@ -5,6 +5,7 @@ class ItemModel {
   final String name;
   final String? description;
   final double price;
+  final int status;
   final String? image;
   final CategoryModel? category;
 
@@ -13,6 +14,7 @@ class ItemModel {
     required this.name,
     this.description,
     required this.price,
+    required this.status,
     this.image,
     this.category,
   });
@@ -23,6 +25,7 @@ class ItemModel {
       name: json['name'] ?? "",
       description: json['description'],
       price: double.tryParse(json['price']?.toString() ?? '0') ?? 0.0,
+      status: json['status'] ?? 0,
       image: json['image'],
       category: json['category'] != null ? CategoryModel.fromJson(json['category']) : null,
     );

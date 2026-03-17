@@ -22,13 +22,14 @@ class ItemView extends GetView<ItemController> {
               onFilter: controller.openFilter,
               table: UiTable(
                 isLoading: controller.isLoading.value,
-                columns: const ["ID", "Name", "Category", "Price", "Actions"],
+                columns: const ["ID", "Name", "Category", "Price", "Status", "Actions"],
                 columnWidths: const {
                   0: FixedColumnWidth(80),
                   1: FlexColumnWidth(2),
                   2: FlexColumnWidth(1.5),
                   3: FlexColumnWidth(1.5),
-                  4: FixedColumnWidth(150),
+                  4: FixedColumnWidth(100),
+                  5: FixedColumnWidth(150),
                 },
                 rows: controller.items
                     .map((item) => [
@@ -36,6 +37,21 @@ class ItemView extends GetView<ItemController> {
                           Text(item.name, style: const TextStyle(fontWeight: FontWeight.w600)),
                           Text(item.category?.name ?? "-"),
                           Text("Rp ${item.price}"),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: item.status == 1 ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              item.status == 1 ? "Active" : "Inactive",
+                              style: TextStyle(
+                                color: item.status == 1 ? Colors.green : Colors.red,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                           Row(
                             children: [
                               IconButton(

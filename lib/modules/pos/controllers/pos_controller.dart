@@ -192,15 +192,11 @@ class PosController extends GetxController {
         'table_id': selectedTableId.value,
         'customer_name': customerName.value,
         'customer_phone': customerPhone.value,
-        'payment_method': 0, // Cash/Default for now
-        'delivery_id': null, // Null for dine in
+        'payment_method': 0,
         'items': orderItems,
       };
 
       final response = await _apiHandler.post('/pos/order', data: payload);
-
-      print("Response status: ${response.statusCode}");
-      print("Response data: ${response.data}");
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         // Clear cart and form
@@ -221,7 +217,7 @@ class PosController extends GetxController {
           barrierDismissible: false,
         );
       } else {
-        Get.snackbar('Error', 'Failed to place order. Code: ${response.statusCode}');
+        Get.snackbar('Error', 'Failed to place order. Code: ${response.statusCode}. Message: ${response.data['message']}');
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to place order: $e');

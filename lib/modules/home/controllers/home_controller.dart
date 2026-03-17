@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../repositories/sidebar_repository.dart';
 import '../../../core/models/menu_model.dart';
 import '../../../core/services/storage_service.dart';
+import '../../../routes/app_pages.dart';
 
 class HomeController extends GetxController {
   final sidebarRepository = Get.put(SidebarRepository());
@@ -30,24 +31,24 @@ class HomeController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = response.data ?? [];
         if (data.isEmpty) {
-          _handleLogout();
+          handleLogout();
         } else {
           menuList.assignAll(data);
         }
       } else {
-        _handleLogout();
+        handleLogout();
       }
     } catch (e) {
       debugPrint("Error fetching menus: $e");
-      _handleLogout();
+      handleLogout();
     } finally {
       isMenuLoading.value = false;
     }
   }
 
-  void _handleLogout() {
+  void handleLogout() {
     StorageService.removeToken();
-    Get.offAllNamed('/login');
+    Get.offAllNamed(Routes.LOGIN);
   }
 
   @override

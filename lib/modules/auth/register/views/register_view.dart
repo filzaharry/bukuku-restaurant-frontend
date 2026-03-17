@@ -69,43 +69,40 @@ class RegisterView extends GetView<RegisterController> {
                 ),
                 const SizedBox(height: 16),
                 Obx(() => UiTextInput(
-                  label: 'Password',
-                  hint: 'Enter your password',
-                  controller: controller.passwordController,
-                  prefixIcon: Icons.lock_outline,
-                  obscureText: !controller.isPasswordVisible.value,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isPasswordVisible.value
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: AppColors.textSecondary,
-                    ),
-                    onPressed: controller.togglePasswordVisibility,
-                  ),
-                )),
+                      label: 'Password',
+                      hint: 'Enter your password',
+                      controller: controller.passwordController,
+                      prefixIcon: Icons.lock_outline,
+                      obscureText: !controller.isPasswordVisible.value,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          controller.isPasswordVisible.value ? Icons.visibility : Icons.visibility_off,
+                          color: AppColors.textSecondary,
+                        ),
+                        onPressed: controller.togglePasswordVisibility,
+                      ),
+                    )),
                 const SizedBox(height: 16),
                 Obx(() => UiTextInput(
-                  label: 'Retype Password',
-                  hint: 'Retype your password',
-                  controller: controller.rePasswordController,
-                  prefixIcon: Icons.lock_reset_outlined,
-                  obscureText: !controller.isRePasswordVisible.value,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isRePasswordVisible.value
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: AppColors.textSecondary,
-                    ),
-                    onPressed: controller.toggleRePasswordVisibility,
-                  ),
-                )),
+                      label: 'Retype Password',
+                      hint: 'Retype your password',
+                      controller: controller.rePasswordController,
+                      prefixIcon: Icons.lock_reset_outlined,
+                      obscureText: !controller.isRePasswordVisible.value,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          controller.isRePasswordVisible.value ? Icons.visibility : Icons.visibility_off,
+                          color: AppColors.textSecondary,
+                        ),
+                        onPressed: controller.toggleRePasswordVisibility,
+                      ),
+                    )),
                 const SizedBox(height: 32),
-                UiButton(
-                  label: 'Register',
-                  onPressed: controller.register,
-                ),
+                Obx(() => UiButton(
+                      label: controller.isLoading.value ? 'Registering...' : 'Register',
+                      onPressed: () => controller.register(),
+                      isLoading: controller.isLoading.value,
+                    )),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

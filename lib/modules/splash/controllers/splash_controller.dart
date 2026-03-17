@@ -11,10 +11,9 @@ class SplashController extends GetxController {
 
   void _checkInitialRoute() async {
     await Future.delayed(const Duration(seconds: 2));
-    final String initialRoute = StorageService.getToken() != null 
-        ? Routes.HOME 
-        : Routes.POS;
-        
+    print('Token: ${StorageService.getToken()}');
+    final String initialRoute = StorageService.getToken() != null ? Routes.HOME : Routes.POS;
+
     Get.offAllNamed(initialRoute);
   }
 }

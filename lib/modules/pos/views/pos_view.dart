@@ -13,7 +13,7 @@ class PosView extends GetView<PosController> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: const Text('Bukuku POS', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Bukuku App', style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black87,
         elevation: 0,

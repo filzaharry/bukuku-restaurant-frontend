@@ -48,36 +48,34 @@ class LoginView extends GetView<LoginController> {
                 ),
                 const SizedBox(height: 16),
                 Obx(() => UiTextInput(
-                  label: 'Password',
-                  hint: 'Enter your password',
-                  controller: controller.passwordController,
-                  prefixIcon: Icons.lock_outline,
-                  obscureText: !controller.isPasswordVisible.value,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isPasswordVisible.value
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: AppColors.textSecondary,
-                    ),
-                    onPressed: controller.togglePasswordVisibility,
-                  ),
-                )),
+                      label: 'Password',
+                      hint: 'Enter your password',
+                      controller: controller.passwordController,
+                      prefixIcon: Icons.lock_outline,
+                      obscureText: !controller.isPasswordVisible.value,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          controller.isPasswordVisible.value ? Icons.visibility : Icons.visibility_off,
+                          color: AppColors.textSecondary,
+                        ),
+                        onPressed: controller.togglePasswordVisibility,
+                      ),
+                    )),
                 const SizedBox(height: 32),
                 Obx(() => UiButton(
-                  label: 'Login',
-                  isLoading: controller.isLoading.value,
-                  onPressed: controller.login,
-                )),
+                      label: 'Login',
+                      isLoading: controller.isLoading.value,
+                      onPressed: controller.login,
+                    )),
                 const SizedBox(height: 16),
                 Obx(() => UiButton(
-                  label: 'Sign in with Google',
-                  isLoading: controller.isLoading.value,
-                  onPressed: controller.signInWithGoogle,
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black87,
-                  icon: Icons.g_mobiledata,
-                )),
+                      label: 'Sign in with Google',
+                      isLoading: controller.isLoading.value,
+                      onPressed: controller.signInWithGoogle,
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black87,
+                      icon: Icons.g_mobiledata,
+                    )),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,6 +85,21 @@ class LoginView extends GetView<LoginController> {
                       onTap: controller.goToRegister,
                       child: const Text(
                         'Register here',
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: controller.goToApp,
+                      child: const Text(
+                        'Back to Resto App',
                         style: TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,

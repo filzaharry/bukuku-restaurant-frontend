@@ -10,8 +10,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginController extends GetxController {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  // final emailController = TextEditingController();
+  // final passwordController = TextEditingController();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
 
   // Inject Repository
   final LoginRepository loginRepository = Get.find<LoginRepository>();
@@ -20,11 +22,19 @@ class LoginController extends GetxController {
   final isLoading = false.obs;
 
   @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
+  void onInit() {
+    super.onInit();
+    // ✅ Init di sini, bukan di field declaration
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
   }
+
+  // @override
+  // void onClose() {
+  //   emailController.dispose();
+  //   passwordController.dispose();
+  //   super.onClose();
+  // }
 
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
@@ -79,17 +89,21 @@ class LoginController extends GetxController {
     Get.toNamed(Routes.REGISTER);
   }
 
+  void goToApp() {
+    Get.toNamed(Routes.POS);
+  }
+
   Future<void> signInWithGoogle() async {
     try {
       isLoading.value = true;
-      
-      // We must pass the Web Client ID from env to serverClientId 
+
+      // We must pass the Web Client ID from env to serverClientId
       // otherwise Android won't generate an idToken outside of Firebase automatically.
       final String? webClientId = dotenv.env['GOOGLE_WEB_CLIENT_ID'];
       final GoogleSignIn googleSignIn = GoogleSignIn(
         serverClientId: webClientId,
       );
-      
+
       final GoogleSignInAccount? account = await googleSignIn.signIn();
       if (account == null) {
         print("Google Sign In aborted: account is null");

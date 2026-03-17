@@ -10,14 +10,47 @@ class OrderRepository {
     int page = 1,
     String? search,
   }) async {
-    final response = await apiHandler.get('/orders', queryParameters: {
+    final response = await apiHandler.get('/fnb/order', queryParameters: {
       'page': page,
       if (search != null) 'search': search,
     });
 
     return BaseResponse<List<OrderModel>>.fromJson(
-      response.data,
-      (data) => (data as List).map((e) => OrderModel.fromJson(e)).toList(),
+      response.data as Map<String, dynamic>,
+      (data) => (data as List).map((e) => OrderModel.fromJson(e as Map<String, dynamic>)).toList(),
+      hasMeta: true,
+    );
+  }
+
+  Future<BaseResponse<OrderModel>> getOrderDetail(int id) async {
+    final response = await apiHandler.get('/fnb/order/$id');
+    return BaseResponse<OrderModel>.fromJson(
+      response.data as Map<String, dynamic>,
+      (data) => OrderModel.fromJson(data as Map<String, dynamic>),
+    );
+  }
+
+  Future<BaseResponse<dynamic>> updateStatus(int id, int status) async {
+    final response = await apiHandler.get('/fnb/order/$id/$status');
+    return BaseResponse<dynamic>.fromJson(
+      response.data as Map<String, dynamic>,
+      (data) => data,
+    );
+  }
+
+  Future<BaseResponse<List<OrderModel>>> getKitchenOrders({
+    int page = 1,
+    String? search,
+  }) async {
+    final response = await apiHandler.get('/fnb/kitchen', queryParameters: {
+      'page': page,
+      if (search != null) 'search': search,
+    });
+
+    return BaseResponse<List<OrderModel>>.fromJson(
+      response.data as Map<String, dynamic>,
+      (data) => (data as List).map((e) => OrderModel.fromJson(e as Map<String, dynamic>)).toList(),
+      hasMeta: true,
     );
   }
 }

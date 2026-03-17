@@ -10,6 +10,8 @@ class OrderController extends GetxController {
   final isLoading = false.obs;
   final meta = Rxn<PaginationMeta>();
   final searchQuery = "".obs;
+  final selectedOrder = Rxn<OrderModel>();
+  final isDetailLoading = false.obs;
 
   @override
   void onInit() {
@@ -49,5 +51,31 @@ class OrderController extends GetxController {
 
   void openFilter() {
     Get.snackbar("Info", "Filter functionality would go here");
+  }
+
+  Future<void> fetchOrderDetail(int id) async {
+    try {
+      isDetailLoading.value = true;
+      final response = await repository.getOrderDetail(id);
+      if (response.statusCode == 200) {
+        selectedOrder.value = response.data;
+      }
+    } finally {
+      isDetailLoading.value = false;
+    }
+  }
+
+  Future<void> updateOrderStatus(int id, int status) async {
+    try {
+      isLoading.value = true;
+      final response = await repository.updateStatus(id, status);
+      if (response.statusCode == 200) {
+        Get.back();
+        fetchOrders();
+        Get.snackbar("Success", "Order status updated successfully");
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

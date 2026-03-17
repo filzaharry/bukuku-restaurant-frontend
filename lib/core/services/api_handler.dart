@@ -54,6 +54,26 @@ class ApiHandler extends getx.GetxService {
       onResponse: (response, handler) {
         developer.log('<-- ${response.statusCode} ${response.requestOptions.uri}');
         developer.log('Response: ${response.data}');
+
+        // Handle 422 validation errors with errors array
+        if (response.statusCode == 422 && response.data is Map) {
+          final data = response.data as Map;
+          if (data.containsKey('errors') && data['errors'] is List) {
+            final errors = data['errors'] as List;
+            for (final error in errors) {
+              if (error is String) {
+                getx.Get.snackbar(
+                  'Validation Error',
+                  error,
+                  backgroundColor: getx.Get.theme.colorScheme.error,
+                  colorText: getx.Get.theme.colorScheme.onError,
+                  snackPosition: getx.SnackPosition.BOTTOM,
+                );
+              }
+            }
+          }
+        }
+
         return handler.next(response);
       },
       onError: (DioException e, handler) {

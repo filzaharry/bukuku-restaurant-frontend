@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../core/theme/app_colors.dart';
+import '../core/services/storage_service.dart';
+import '../routes/app_pages.dart';
 import '../modules/home/controllers/home_controller.dart';
 import '../core/models/menu_model.dart';
 
@@ -63,8 +65,9 @@ class UiSidebar extends GetView<HomeController> {
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),
             title: const Text('Logout', style: TextStyle(color: Colors.red)),
-            onTap: () {
-              Get.offAllNamed('/login');
+            onTap: () async {
+              await StorageService.removeToken();
+              Get.offAllNamed(Routes.LOGIN);
             },
           ),
           const SizedBox(height: 20),
