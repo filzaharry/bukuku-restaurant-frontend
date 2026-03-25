@@ -2,7 +2,7 @@ class TableModel {
   final int id;
   final String uniqueId;
   final String name;
-  final int status;
+  final String status;
 
   TableModel({
     required this.id,

@@ -120,14 +120,20 @@ class TableController extends GetxController {
 
       final response = await repository.createTable({
         'name': nameController.text,
-        'status': statusValue.value,
+        'status': statusValue.value.toString(),
       });
 
       Get.back(); // Close loading
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         Get.back(); // Close dialog
-        Get.snackbar("Success", "Table created successfully");
+        Get.snackbar(
+          "Success",
+          "Table created successfully",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
         fetchTables();
       } else {
         Get.snackbar("Error", response.message);
@@ -140,7 +146,7 @@ class TableController extends GetxController {
 
   void editTableDialog(TableModel table) {
     nameController.text = table.name;
-    statusValue.value = table.status;
+    statusValue.value = int.parse(table.status);
 
     Get.dialog(
       Dialog(
@@ -207,14 +213,20 @@ class TableController extends GetxController {
 
       final response = await repository.updateTable(id, {
         'name': nameController.text,
-        'status': statusValue.value,
+        'status': statusValue.value.toString(),
       });
 
       Get.back(); // Close loading
 
       if (response.statusCode == 200) {
         Get.back(); // Close dialog
-        Get.snackbar("Success", "Table updated successfully");
+        Get.snackbar(
+          "Success",
+          "Table updated successfully",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
         fetchTables();
       } else {
         Get.snackbar("Error", response.message);
@@ -253,7 +265,13 @@ class TableController extends GetxController {
       Get.back(); // Close loading
 
       if (response.statusCode == 200) {
-        Get.snackbar("Success", "Table deleted successfully");
+        Get.snackbar(
+          "Success",
+          "Table deleted successfully",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
         fetchTables();
       } else {
         Get.snackbar("Error", response.message);

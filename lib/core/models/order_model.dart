@@ -1,6 +1,6 @@
 class OrderModel {
   final int id;
-  final int? tableId;
+  final String? tableId;
   final String orderCode;
   final String customerName;
   final String? customerPhone;

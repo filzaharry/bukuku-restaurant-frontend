@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/models/order_model.dart';
 import '../../../core/models/pagination_meta.dart';
@@ -26,7 +27,10 @@ class OrderController extends GetxController {
         page: page,
         search: searchQuery.value.isNotEmpty ? searchQuery.value : null,
       );
-      
+
+      print("response.data");
+      print(response.data);
+
       if (response.statusCode == 200) {
         orders.assignAll(response.data ?? []);
         meta.value = response.meta;
@@ -72,7 +76,13 @@ class OrderController extends GetxController {
       if (response.statusCode == 200) {
         Get.back();
         fetchOrders();
-        Get.snackbar("Success", "Order status updated successfully");
+        Get.snackbar(
+          "Success",
+          "Order status updated successfully",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
       }
     } finally {
       isLoading.value = false;

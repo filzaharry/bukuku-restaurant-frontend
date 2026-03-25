@@ -195,7 +195,13 @@ class ItemController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         Get.back(); // Close dialog
-        Get.snackbar("Success", "Item created successfully");
+        Get.snackbar(
+          "Success",
+          "Item created successfully",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
         fetchItems();
       } else {
         Get.snackbar("Error", response.message);
@@ -215,7 +221,7 @@ class ItemController extends GetxController {
     nameController.text = item.name;
     descriptionController.text = item.description ?? '';
     priceController.text = item.price.toString();
-    
+
     // Select from list if exists, otherwise use current
     final foundCategory = categoryController.categories.firstWhereOrNull((c) => c.id == item.category?.id);
     selectedCategory.value = foundCategory ?? item.category;
@@ -348,7 +354,13 @@ class ItemController extends GetxController {
 
       if (response.statusCode == 200) {
         Get.back(); // Close dialog
-        Get.snackbar("Success", "Item updated successfully");
+        Get.snackbar(
+          "Success",
+          "Item updated successfully",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
         fetchItems();
       } else {
         Get.snackbar("Error", response.message);
@@ -387,7 +399,13 @@ class ItemController extends GetxController {
       Get.back(); // Close loading
 
       if (response.statusCode == 200) {
-        Get.snackbar("Success", "Item deleted successfully");
+        Get.snackbar(
+          "Success",
+          "Item deleted successfully",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
         fetchItems();
       } else {
         Get.snackbar("Error", response.message);

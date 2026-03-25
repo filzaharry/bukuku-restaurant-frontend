@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/models/order_model.dart';
 import '../../orders/repositories/order_repository.dart';
@@ -12,7 +13,7 @@ class KitchenController extends GetxController {
   void onInit() {
     super.onInit();
     fetchOrders();
-    
+
     // Auto refresh every 30 seconds
     refreshPeriodically();
   }
@@ -45,7 +46,13 @@ class KitchenController extends GetxController {
       final response = await repository.updateStatus(orderId, status);
 
       if (response.statusCode == 200) {
-        Get.snackbar("Success", "Order status updated successfully");
+        Get.snackbar(
+          "Success",
+          "Order status updated successfully",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
         fetchOrders(); // Refresh orders
       } else {
         Get.snackbar("Error", response.message);

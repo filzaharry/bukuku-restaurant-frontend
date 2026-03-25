@@ -40,20 +40,20 @@ class ApiHandler extends getx.GetxService {
     // Custom Logger that prints everything even if it's long
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-        developer.log('--> ${options.method} ${options.uri}');
-        developer.log('Headers: ${options.headers}');
+        print('--> ${options.method} ${options.uri}');
+        print('Headers: ${options.headers}');
         if (options.data != null) {
           if (options.data is FormData) {
-            developer.log('Body: FormData (Fields: ${(options.data as FormData).fields})');
+            print('Body: FormData (Fields: ${(options.data as FormData).fields})');
           } else {
-            developer.log('Body: ${options.data}');
+            print('Body: ${options.data}');
           }
         }
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        developer.log('<-- ${response.statusCode} ${response.requestOptions.uri}');
-        developer.log('Response: ${response.data}');
+        print('<-- ${response.statusCode} ${response.requestOptions.uri}');
+        print('Response: ${response.data}');
 
         // Handle 422 validation errors with errors array
         if (response.statusCode == 422 && response.data is Map) {
@@ -77,11 +77,13 @@ class ApiHandler extends getx.GetxService {
         return handler.next(response);
       },
       onError: (DioException e, handler) {
-        developer.log('<-- ERROR ${e.requestOptions.uri}');
-        developer.log('Message: ${e.message}');
+        print('<-- ERROR ${e.requestOptions.uri}');
+        print('Message: ${e.message}');
         if (e.response != null) {
-          developer.log('Error Data: ${e.response?.data}');
+          print('Error Data: ${e.response?.data}');
         }
+        print("error dari backend");
+        print(e.response?.data);
         return handler.next(e);
       },
     ));
@@ -108,11 +110,13 @@ class ApiHandler extends getx.GetxService {
         options: options,
       );
     } on DioException catch (e) {
-      developer.log('DioException on ${method} ${path}');
-      developer.log('Status Code: ${e.response?.statusCode}');
-      developer.log('Data: ${e.response?.data}');
+      print('DioException on ${method} ${path}');
+      print('Status Code: ${e.response?.statusCode}');
+      print('Data: ${e.response?.data}');
+      print("error dari backend");
       rethrow;
     } catch (e) {
+      print("error dari backend");
       throw Exception('Unexpected error: $e');
     }
   }

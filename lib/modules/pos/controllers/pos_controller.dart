@@ -198,6 +198,11 @@ class PosController extends GetxController {
 
       final response = await _apiHandler.post('/pos/order', data: payload);
 
+      print("response.data");
+      print("response.data");
+      print("response.data");
+      print(response.data);
+
       if (response.statusCode == 201 || response.statusCode == 200) {
         // Clear cart and form
         cart.clear();

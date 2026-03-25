@@ -35,13 +35,13 @@ class TableView extends GetView<TableController> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: item.status == 0 ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+                              color: item.status == "0" ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
-                              item.status == 0 ? "Available" : "Unavailable",
+                              item.status == "0" ? "Available" : "Unavailable",
                               style: TextStyle(
-                                color: item.status == 0 ? Colors.green : Colors.red,
+                                color: item.status == "0" ? Colors.green : Colors.red,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
